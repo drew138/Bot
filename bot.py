@@ -38,7 +38,7 @@ bot = commands.Bot(command_prefix='!')
 
 
 @bot.command(name='add', help='- Añade un examen en una fecha especificada')
-async def reset(ctx, materia, semana):
+async def add(ctx, materia, semana):
     courses = requests.get()
     if 1 <= semana <= 18 and materia in courses:
         weeks = requests.post()
@@ -48,7 +48,7 @@ async def reset(ctx, materia, semana):
 
 
 @bot.command(name='ver_examenes_semana', help='- Te dice los examenes de la semana')
-async def reset(ctx, materia, semana):
+async def exams(ctx, materia, semana):
     courses = requests.get()
     if 1 <= semana <= 18 and materia in courses:
         weeks = requests.post()
@@ -58,10 +58,9 @@ async def reset(ctx, materia, semana):
 
 
 @bot.command(name='ver_numero_semana', help='- Te dice el numero de la semana')
-async def reset(ctx):
-    response = "SEMANAS\tFECHAS	" \
-               "2	1 agosto" \
-               "3	8 agosto" \
+async def weeknum(ctx):
+    '''
+    response = "SEMANAS\tFECHAS	\n2\t1 agosto\n3\t8 agosto" \
                "4	15 agosto" \
                "5	22 agosto" \
                "6	29 agosto" \
@@ -80,7 +79,8 @@ async def reset(ctx):
                "18	28 noviembre" \
                "19	5 diciembre" \
                "20	12 diciembre\n"
-    await ctx.send(response)
+               '''
+    await ctx.send("xd")
 
 
 bot.run(TOKEN)
