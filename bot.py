@@ -108,28 +108,30 @@ async def current_week(ctx):
 
 @bot.command(name='ver_numero_semana', help='- Te dice el numero de la semana')
 async def weeknum(ctx):
-    '''
-    response = "SEMANAS\tFECHAS	\n2\t1 agosto\n3\t8 agosto" \
-               "4	15 agosto" \
-               "5	22 agosto" \
-               "6	29 agosto" \
-               "7	5 septiembre" \
-               "8	12 septiembre" \
-               "9	19 septiembre" \
-               "RECESO	" \
-               "10	3 octubre" \
-               "11	10 octubre" \
-               "12	17 octubre" \
-               "13	24 octubre" \
-               "14	31 octubre" \
-               "15	7 noviembre" \
-               "16	14 noviembre" \
-               "17	21 noviembre" \
-               "18	28 noviembre" \
-               "19	5 diciembre" \
-               "20	12 diciembre\n"
-               '''
-    await ctx.send("xd")
+
+    response = "SEMANAS\tFECHAS\n" \
+               "2\t\t1 agosto\n" \
+               "3\t\t8 agosto\n" \
+               "4\t\t15 agosto\n"\
+               "5\t\t22 agosto\n"\
+               "6\t\t29 agosto\n"\
+               "7\t\t5 septiembre\n"\
+               "8\t\t12 septiembre\n"\
+               "9\t\t19 septiembre\n"\
+               "\tRECESO\n"\
+               "10\t\t3 octubre\n"\
+               "11\t\t10 octubre\n"\
+               "12\t\t17 octubre\n"\
+               "13\t\t24 octubre\n"\
+               "14\t\t31 octubre\n"\
+               "15\t\t7 noviembre\n"\
+               "16\t\t14 noviembre\n"\
+               "17\t\t21 noviembre\n"\
+               "18\t\t28 noviembre\n"\
+               "19\t\t5 diciembre\n"\
+               "20\t\t12 diciembre\n"
+
+    await ctx.send(response)
 
 
 # bot.run(TOKEN)
