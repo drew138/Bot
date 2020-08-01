@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "upbeat-glow-285118",
+  "private_key_id": "341a442dfb57b7d7d9992c1734ab8abded52474f",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCWW360r5uKxyJE\nqx05U/pE+VnxtXFSBiCLa1HQFsPq9ZMfEUWiJCCCxEucuUqCN2zINwj8dxMIN4D/\nzGa3wzFwNbCYSKdbT9ycnTP18s6vqOyzNFb5r+5qiGRu4KjQLyKsvSD/r/62xVyL\nTNJ3goq7RaHNtgyW80np+2XvRlULw3zVoetlvIz25mYl8EDDvkXKWYIA92VIZgTX\n8cwwORzHKVLM6fGooDxc1iBVSSLnL4WRV8ajtTsXOwKhoecB4Hwkmu41X6EtXrRh\niitHpXITu9MnzP80wQDCd29xcWwZBBzur+gy4lGeP/4wBwt38wvq0+2xMZd97vKQ\nuAd+NLfNAgMBAAECggEAEe3xKwyxyJe8b2HUR0zLUERHxHn1fGl8ogN3KxA75p3I\nIHFH03Dpa46K0bKKvwJq92kQqkJsw5MSz+4I5ariD1Znq5EmW84nKYnZc1+z4+CJ\n8Uixgm7HSG7hQxOJLeIhCWY4NCVBg3v/cCEGC/hGINTJ2aT21V1HmB5BZooFhDRp\nuMgmTpfYkIfAg3lJ8ojpvRm8CDmFt0NNptg6A7fJ1snfHycpzLsI8JNRSzGt3oCH\n7RhUW4V6MbFLj2oSFwoGrqGSotuv1i/OqlUoQgPUvR6tmhUUTIogVhYYksdlVTR2\njUxtMp0N92GRH0lIf19iUKw52t/7YYAm6BOMCyfgxQKBgQDFU/wkb3a3By4O3dCi\nGUO20HzIRk8M0HmJ7zg8nmnLL0jIvqSTdwXoAXenn0RHJvxJ19y78nCZKKoDbY0e\nd4B6ULBjyNuTnB3QZ1inhi6mwnP+QoY9CZErGlRE66bCx7cRVN3u0Dj2tnrlrwyY\nMk8EZ4lxOcXVK0p0WcnU50tU3wKBgQDDED7I3tA7JRJbbz4SCy76Ws8YEnZcC8ph\n4KNB76JCRs/NmddnCrE84e2xEeealxOK8chNSxpRtAM/MDpW93QpgiUimeg8SKRI\nHMqJ180/1m0eaUy1NY6bLXqjy4iNlcVWwSFDjA8MVqtdVQmGnDkFUPUrF/AoFanR\ntLy61na80wKBgQCP717wRM3XW8lg1rOkScF2zET44TAwLLE6x9/Bd9u7ddYld8oc\nNql8PfXFswrey7UjN+2uun0feuXocjSJkKmKjujbIFvqI+orZfbo25uT0CtDv8qj\nIyNcyWvGig2t7ne+kKUB2ahzbU/f0fvh2HCCyfMbQATqJRW+IPBz9/KfCQKBgBSg\nWSNAfGBksSY+AyBBUnxisddnzGA7VvE2oczNHClJ95tUEzTwKoG3mjzJGeZ85zIg\nEwApWuUc1eMOpHyhugTRoD+iaq5FOCnv8XLWAPwpHmzC0buvqB68lmVPlmbyWWWt\nEmlkHAs/9urtnQ5A4r6vKt2dsGVstQJZzEMtfmzFAoGAKazjA6/jv9DDW+0cHs8y\nsBSZvtaKv6rArpoWKw1TN0L9+UlnS29twOXHY0No61YBStj/BWFXj3WlqsMqKecJ\neqcTWc2REF91HORPB6pW4lAk7zIlLyuFW25EMhl2ZC9+3H5qjq285WoidUYBYt8F\nP2z/UArTOhbyaMvlMa0N+3U=\n-----END PRIVATE KEY-----\n",
+  "client_email": "discordeafit@upbeat-glow-285118.iam.gserviceaccount.com",
+  "client_id": "104252637533052415766",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/discordeafit%40upbeat-glow-285118.iam.gserviceaccount.com"
+}
