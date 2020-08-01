@@ -35,6 +35,11 @@ def get_column(column, sheet):
 
 
 @authorize_google
+def cell_up(row, column, value, sheet):
+    sheet.update_cell(row, column, value)
+
+
+@authorize_google
 def get_row(row, sheet):
     return sheet.row_values(row)
 
@@ -75,10 +80,22 @@ bot = commands.Bot(command_prefix='!')
 
 
 @bot.command(name='add', help='- Añade un examen en una fecha especificada')
-async def add(ctx, materia, semana):
-    courses = requests.get()
-    if 1 <= semana <= 18 and materia in courses:
-        weeks = requests.post()
+async def add(ctx, materia, semana, examen):
+    courses = get_row(1)
+    semana = int(semana)
+    if 1 <= semana <= 20 and materia in courses:
+        column = courses.index(materia) + 1
+        old = get_cell(semana, column)
+
+        if old:
+            new = ", ".join([old, examen])
+        else:
+            new = examen
+
+        cell_up(semana, column, new)
+
+        response = "El examen ha sido agregado"
+        await ctx.send(response)
     else:
         response = "Lo siento, la materia o la fecha especificada es invalida\n"
         await ctx.send(response)
@@ -113,6 +130,30 @@ async def exams(ctx, semana, materia=None):
         response = f"```{response}```"
 
     await ctx.send(response)
+
+
+@bot.command(name='quitar', help='- Eliminar un examen')
+async def delete(ctx, semana, materia, examen):
+    courses = get_row(1)
+    semana = int(semana)
+    if 1 <= semana <= 20 and materia in courses:
+        column = courses.index(materia) + 1
+        exams = (get_cell(semana, column)).split(', ')
+
+        newlist = [k for k in exams if k != examen]
+
+        if newlist:
+            exams = ", ".join(newlist)
+        else:
+            exams = ""
+
+        cell_up(semana, column, exams)
+
+        response = "El examen ha sido eliminado"
+        await ctx.send(response)
+    else:
+        response = "Lo siento, la materia o la fecha especificada es invalida\n"
+        await ctx.send(response)
 
 
 @bot.command(name='pair', help='- Aplicación para programar en grupos')
