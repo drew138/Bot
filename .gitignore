@@ -1,4 +1,4 @@
 .env
 __pychache__
 .idea
-cred.json
+creds.json

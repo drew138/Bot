@@ -20,8 +20,7 @@ def authorize_google(func):
         "https://www.googleapis.com/auth/drive.file",
         "https://www.googleapis.com/auth/drive"
     ]
-    credentials = ServiceAccountCredentials.from_json_keyfile_name(
-        "creds.json", scope)
+    credentials = ServiceAccountCredentials.from_json_keyfile_name("creds.json", scope)
     client = gspread.authorize(credentials)
     sheet = client.open().sheet1
 
@@ -34,6 +33,9 @@ def authorize_google(func):
 def get_column(column, sheet=sheet):
     return sheet.col_values(column)
 
+@authorize_google
+def get_row(row, sheet=sheet):
+    return sheet.row_values(row)
 
 @authorize_google
 def retrieve_data(sheet=sheet):
@@ -77,14 +79,21 @@ async def add(ctx, materia, semana):
         await ctx.send(response)
 
 
-@bot.command(name='ver_examenes_semana', help='- Te dice los examenes de la semana')
-async def exams(ctx, materia, semana):
-    courses = requests.get()
-    if 1 <= semana <= 18 and materia in courses:
-        weeks = requests.post()
+@bot.command(name='ver_examenes_materia', help='- Te dice los examenes de la semana')
+async def exams(ctx, semana, materia=materia):
+    if materia:
+        if 1 <= semana <= 18 and materia in courses:
+            weeks = requests.post()
+        else:
+            response = "Lo siento, la materia o la fecha especificada es invalida\n"
+            await ctx.send(response)
     else:
-        response = "Lo siento, la materia o la fecha especificada es invalida\n"
+        header = get_row(1)
+        response = get_row(semana)
+        await ctx.send(header)
         await ctx.send(response)
+
+
 
 
 @bot.command(name='pair', help='- Aplicación para programar en grupos')
