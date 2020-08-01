@@ -135,22 +135,28 @@ async def current_week(ctx):
     date = datetime.now()
     num_weeks = get_column(1)[1:]
     date_weeks = list(map(lambda x: datetime.strptime(x, '%d/%m/%Y'), get_column(2)[1:]))
-    sizeweeks = len(date_weeks)-1
+    sizeweeks = len(date_weeks) - 1
 
     for index, dates in enumerate(zip(num_weeks, date_weeks)):
         week, dateweek = dates
 
-        if dateweek <= date <= date_weeks[index+1]:
+        if (index < sizeweeks) and (dateweek <= date <= date_weeks[index + 1]):
             response = f"La semana actual es la: {week}"
             await ctx.send(response)
-            return
+            break
+        elif index == sizeweeks:
+            response = f"La semana actual es la: {week}"
+            await ctx.send(response)
+            break
 
 
 @bot.command(name='ver_numero_semana', help='- Te dice el numero de la semana')
 async def weeknum(ctx):
-    response ="hola"
-
-    await ctx.send(response)
+    table = PrettyTable()
+    header = ['Semanas', 'Fechas']
+    table.add_column(header[0], get_column(1)[1:])
+    table.add_column(header[1], get_column(2)[1:])
+    await ctx.send(f"```{table}```")
 
 
 bot.run(TOKEN)
