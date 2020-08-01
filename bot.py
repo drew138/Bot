@@ -1,6 +1,5 @@
 # bot.py
 import os
-import random
 import requests
 from datetime import datetime
 import gspread
@@ -12,18 +11,36 @@ from oauth2client.service_account import ServiceAccountCredentials
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 GUILD = os.getenv('DISCORD_GUILD')
-scope = [
-    "https://spreadsheets.google.com/feeds",
-    "https://www.googleapis.com/auth/spreadsheets'",
-    "https://www.googleapis.com/auth/drive.file",
-    "https://www.googleapis.com/auth/drive"
+
+
+def authorize_google(func):
+    scope = [
+        "https://spreadsheets.google.com/feeds",
+        "https://www.googleapis.com/auth/spreadsheets'",
+        "https://www.googleapis.com/auth/drive.file",
+        "https://www.googleapis.com/auth/drive"
     ]
+    credentials = ServiceAccountCredentials.from_json_keyfile_name(
+        "creds.json", scope)
+    client = gspread.authorize(credentials)
+    sheet = client.open().sheet1
 
-credentials = ServiceAccountCredentials.from_json_keyfile_name("creds.json", scope)
+    def wrapper_function(*args, **kwargs):
+        return func(*args, sheet=sheet, **kwargs)
+    return wrapper_function
 
-client = gspread.authorize(credentials)
 
-sheet = client.open().sheet1
+@authorize_google
+def get_column(column, sheet=sheet):
+    return sheet.col_values(column)
+
+
+@authorize_google
+def retrieve_data(sheet=sheet):
+    return sheet.get_all_records()
+
+
+sheet.findall("valor")
 
 '''
 client = discord.Client()
@@ -70,6 +87,25 @@ async def reset(ctx, materia, semana):
         await ctx.send(response)
 
 
+@bot.command(name='pair', help='- Aplicación para programar en grupos')
+async def pair_programming(ctx):
+    replit = "programa en grupos con: \nhttps://repl.it/"
+    await ctx.send(replit)
+
+
+@bot.command(pass_context=True)
+async def addrole(ctx, role: discord.Role, member: discord.Member = None):
+    member = member or ctx.message.author
+    await client.add_roles(member, role)
+    # https://stackoverflow.com/questions/48987006/how-to-make-a-discord-bot-that-gives-roles-in-python
+
+
+@bot.command(name='semana', help='- Te dice la semana actual')
+async def current_week(ctx):
+    num_weeks = get_column(1)
+    date_weeks = get_column(2)
+
+
 @bot.command(name='ver_numero_semana', help='- Te dice el numero de la semana')
 async def reset(ctx):
     response = "SEMANAS\tFECHAS	" \
@@ -96,4 +132,4 @@ async def reset(ctx):
     await ctx.send(response)
 
 
-bot.run(TOKEN)
+# bot.run(TOKEN)
