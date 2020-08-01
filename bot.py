@@ -1,6 +1,7 @@
 # bot.py
 import os
 import requests
+from prettytable import PrettyTable
 from datetime import datetime
 import gspread
 import discord
@@ -16,33 +17,37 @@ GUILD = os.getenv('DISCORD_GUILD')
 def authorize_google(func):
     scope = [
         "https://spreadsheets.google.com/feeds",
-        "https://www.googleapis.com/auth/spreadsheets'",
-        "https://www.googleapis.com/auth/drive.file",
         "https://www.googleapis.com/auth/drive"
     ]
     credentials = ServiceAccountCredentials.from_json_keyfile_name("creds.json", scope)
     client = gspread.authorize(credentials)
-    sheet = client.open().sheet1
+    sheet = client.open("WEBSERVERFECHASDISCORD").sheet1
 
-    def wrapper_function(*args, **kwargs):
-        return func(*args, sheet=sheet, **kwargs)
+    def wrapper_function(*args):
+        return func(*args, sheet)
+
     return wrapper_function
 
 
 @authorize_google
-def get_column(column, sheet=sheet):
+def get_column(column, sheet):
     return sheet.col_values(column)
 
+
 @authorize_google
-def get_row(row, sheet=sheet):
+def get_row(row, sheet):
     return sheet.row_values(row)
 
+
 @authorize_google
-def retrieve_data(sheet=sheet):
+def get_cell(column, row, sheet):
+    return sheet.cell(column, row).value
+
+
+@authorize_google
+def retrieve_data(sheet):
     return sheet.get_all_records()
 
-
-sheet.findall("valor")
 
 '''
 client = discord.Client()
@@ -80,20 +85,34 @@ async def add(ctx, materia, semana):
 
 
 @bot.command(name='ver_examenes_materia', help='- Te dice los examenes de la semana')
-async def exams(ctx, semana, materia=materia):
+async def exams(ctx, semana, materia=None):
+    response = ""
+    header = get_row(1)
     if materia:
-        if 1 <= semana <= 18 and materia in courses:
-            weeks = requests.post()
+        courses = header[2:]
+        if 1 <= int(semana) <= 20 and materia in courses:
+            column = header.index(materia) + 1
+            cell = get_cell(semana, column)
+            if cell:
+                response = f"Para la semana {semana} de la materia {materia} hay: \n{cell}"
+            else:
+                response = f"Para la semana {semana} de la materia {materia} NO HAY examenes"
         else:
             response = "Lo siento, la materia o la fecha especificada es invalida\n"
-            await ctx.send(response)
     else:
         header = get_row(1)
-        response = get_row(semana)
-        await ctx.send(header)
-        await ctx.send(response)
+        response = PrettyTable(header)
+        row = get_row(semana)
 
+        for index, element in enumerate(row):
+            ele = element.split(',')
+            row[index] = ele
 
+        response.add_column(row)
+
+        response = f"```{response}```"
+
+    await ctx.send(response)
 
 
 @bot.command(name='pair', help='- Aplicación para programar en grupos')
@@ -102,45 +121,36 @@ async def pair_programming(ctx):
     await ctx.send(replit)
 
 
+'''
 @bot.command(pass_context=True)
 async def addrole(ctx, role: discord.Role, member: discord.Member = None):
     member = member or ctx.message.author
     await client.add_roles(member, role)
     # https://stackoverflow.com/questions/48987006/how-to-make-a-discord-bot-that-gives-roles-in-python
+'''
 
 
 @bot.command(name='semana', help='- Te dice la semana actual')
 async def current_week(ctx):
-    num_weeks = get_column(1)
-    date_weeks = get_column(2)
+    date = datetime.now()
+    num_weeks = get_column(1)[1:]
+    date_weeks = list(map(lambda x: datetime.strptime(x, '%d/%m/%Y'), get_column(2)[1:]))
+    sizeweeks = len(date_weeks)-1
+
+    for index, dates in enumerate(zip(num_weeks, date_weeks)):
+        week, dateweek = dates
+
+        if dateweek <= date <= date_weeks[index+1]:
+            response = f"La semana actual es la: {week}"
+            await ctx.send(response)
+            return
 
 
 @bot.command(name='ver_numero_semana', help='- Te dice el numero de la semana')
 async def weeknum(ctx):
-
-    response = "SEMANAS\tFECHAS\n" \
-               "2\t\t1 agosto\n" \
-               "3\t\t8 agosto\n" \
-               "4\t\t15 agosto\n"\
-               "5\t\t22 agosto\n"\
-               "6\t\t29 agosto\n"\
-               "7\t\t5 septiembre\n"\
-               "8\t\t12 septiembre\n"\
-               "9\t\t19 septiembre\n"\
-               "\tRECESO\n"\
-               "10\t\t3 octubre\n"\
-               "11\t\t10 octubre\n"\
-               "12\t\t17 octubre\n"\
-               "13\t\t24 octubre\n"\
-               "14\t\t31 octubre\n"\
-               "15\t\t7 noviembre\n"\
-               "16\t\t14 noviembre\n"\
-               "17\t\t21 noviembre\n"\
-               "18\t\t28 noviembre\n"\
-               "19\t\t5 diciembre\n"\
-               "20\t\t12 diciembre\n"
+    response ="hola"
 
     await ctx.send(response)
 
 
-# bot.run(TOKEN)
+bot.run(TOKEN)
